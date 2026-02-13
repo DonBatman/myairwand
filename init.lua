@@ -1,3 +1,14 @@
+local modname = core.get_current_modname()
+local gameid = core.get_game_info().id
+if gameid ~= "mineclone2" and gameid ~= "VoxeLibre" and gameid ~= "mineclonia" and gameid ~= "minetest" then
+    core.log("warning","[" .. modname .. "] expected a gameid of mineclonia or VoxeLibre. Errors might occur.")
+end
+-- simplify future if statements
+if gameid == "mineclone2" or gameid == "VoxeLibre" then
+    gameid = "VoxeLibre"
+end
+
+
 core.register_tool("myairwand:wand", {
     description = "A wand to place nodes in the air",
     inventory_image = "myairwand_wand.png",
@@ -48,11 +59,17 @@ core.register_tool("myairwand:wand", {
     end,
 })
 
+local steel = "default:steel_ingot"
+local glass = "default:glass"
+if gameid == "VoxeLibre" or gameid == "mineclonia" then
+    steel = "mcl_core:iron_ingot"
+    glass = "mcl_core:glass"
+end
 core.register_craft({
     output = "myairwand:wand",
     recipe = {
-        {"", "", "default:steel_ingot"},
-        {"", "default:steel_ingot", ""},
-        {"default:glass", "", ""},
+        {"", "", steel},
+        {"", steel, ""},
+        {glass, "", ""},
     }
 })
